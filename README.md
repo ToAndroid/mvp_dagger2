@@ -1,6 +1,6 @@
-#mvp+dagger2+rxandrod
+# mvp+dagger2+rxandrod
 
-###环境搭建
+### 环境搭建
     创建config.grdle，统一三方库版本
     ***
     ext {
