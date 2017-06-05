@@ -48,13 +48,9 @@
     ***
 - APT(注解)引入
   1. 项目build.gradle文件
-  ***
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-  ***
+  *** classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8' ***
   2. 模块builde.gradle文件
-  ***
-        apply plugin: 'com.neenbedankt.android-apt'
-  ***
+  *** apply plugin: 'com.neenbedankt.android-apt' ***
         
 
     
