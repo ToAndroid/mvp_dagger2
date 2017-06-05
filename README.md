@@ -2,12 +2,12 @@
 
 ### 环境搭建
 - 创建config.grdle，统一三方库版本
-- 在项目根目录的build.gradle文件引入  
+- 在项目的build.gradle文件引入  
   *** 
       apply from: "config.gradle" 
   ***
   
-- 在应用目录的build.gradle文件配置
+- 在模块的build.gradle文件配置
     1. 配置Android基本
     ***
         android {
@@ -46,5 +46,15 @@
        
        }
     ***
+- APT(注解)引入
+  1. 项目build.gradle文件
+  ***
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+  ***
+  2. 模块builde.gradle文件
+  ***
+        apply plugin: 'com.neenbedankt.android-apt'
+  ***
+        
 
     
