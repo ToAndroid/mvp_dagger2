@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.example.demolib.utils.PhoneInfoUtils;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
@@ -23,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         DemoApplication.getAppComponent().inject(this);
         String string = mContext.getResources().getString(R.string.app_name);
-        tv.setText(string);
+        String deviceInfo = PhoneInfoUtils.getDeviceInfo(mContext);
+        tv.setText(deviceInfo);
 
     }
 }
