@@ -32,4 +32,7 @@ dependencies {
     compile rootProject.ext.dependencies["butterknife"]
     apt rootProject.ext.dependencies["butterknife-compiler"]
 
+    //okhttp
+    compile rootProject.ext.dependencies["okhttp3"]
+
 }

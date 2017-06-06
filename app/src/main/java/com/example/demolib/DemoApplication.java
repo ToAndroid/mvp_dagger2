@@ -1,25 +1,27 @@
 package com.example.demolib;
 
 import android.app.Application;
-import com.example.demolib.component.AppComponent;
-import com.example.demolib.component.DaggerAppComponent;
-import com.example.demolib.module.AppModule;
+
+import com.example.demolib.mvp.component.ApplicationComponent;
+import com.example.demolib.mvp.component.DaggerApplicationComponent;
+import com.example.demolib.mvp.module.ApplicationModule;
+
 
 /**
  * Created by john on 2017/6/5.
  */
 
 public class DemoApplication extends Application {
-    private static AppComponent sAppComponent;
+    private static ApplicationComponent sAppComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        sAppComponent = DaggerAppComponent.builder()
-                .appModule(new AppModule(this)).build();
+        sAppComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this)).build();
     }
 
-    public static AppComponent getAppComponent() {
+    public static ApplicationComponent getApplicationComponent() {
         return sAppComponent;
     }
 }

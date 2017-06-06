@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        DemoApplication.getAppComponent().inject(this);
+        DemoApplication.getApplicationComponent().inject(this);
         String string = mContext.getResources().getString(R.string.app_name);
         String deviceInfo = PhoneInfoUtils.getDeviceInfo(mContext);
         tv.setText(deviceInfo);
