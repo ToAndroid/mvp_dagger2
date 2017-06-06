@@ -2,14 +2,12 @@ package com.example.demolib.api;
 
 import android.content.Context;
 
-import com.example.demolib.bean.BaseBean;
+import com.example.demolib.bean.BaseResponse;
 import com.example.demolib.bean.DataBean;
-import com.example.demolib.components.retrofit.FastJsonConverterFactory;
 
 import java.util.List;
 
 import okhttp3.OkHttpClient;
-import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -38,7 +36,7 @@ public class MainApi {
         mMainService = retrofit.create(MainService.class);
     }
 
-    public Observable<BaseBean<List<DataBean>>> getData(){
+    public Observable<BaseResponse<List<DataBean>>> getData(){
        return mMainService.getData().subscribeOn(Schedulers.io());
     }
 }

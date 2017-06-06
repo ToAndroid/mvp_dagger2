@@ -3,14 +3,12 @@ package com.example.demolib;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.AndroidCharacter;
 import android.widget.TextView;
 
 import com.example.demolib.api.MainApi;
-import com.example.demolib.bean.BaseBean;
 import com.example.demolib.bean.BaseHttpFunc;
 import com.example.demolib.bean.DataBean;
-import com.example.demolib.components.okhttp.HttpLoggingInterceptor;
+import com.example.demolib.components.exception.HttpServiceException;
 import com.example.demolib.utils.Logger;
 import com.example.demolib.utils.PhoneInfoUtils;
 import com.google.gson.Gson;
@@ -21,7 +19,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -53,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        Logger.e("onError : " + e.getMessage());
+                        if(e instanceof HttpServiceException)
+                        Logger.e("onError : " + ((HttpServiceException)e).toString());
                     }
 
                     @Override

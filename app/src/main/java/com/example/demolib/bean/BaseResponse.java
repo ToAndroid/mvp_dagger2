@@ -4,7 +4,7 @@ package com.example.demolib.bean;
  * Created by john on 2017/6/6.
  */
 
-public class BaseBean<T> {
+public class BaseResponse<T> {
     private int status;
     private String msg;
     private T data;
@@ -35,7 +35,7 @@ public class BaseBean<T> {
 
     @Override
     public String toString() {
-        return "BaseBean{" +
+        return "BaseResponse{" +
                 "code='" + status + '\'' +
                 ", msg='" + msg + '\'' +
                 '}';

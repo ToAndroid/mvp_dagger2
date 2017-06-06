@@ -1,7 +1,7 @@
 package com.example.demolib.api;
 
 
-import com.example.demolib.bean.BaseBean;
+import com.example.demolib.bean.BaseResponse;
 import com.example.demolib.bean.DataBean;
 
 import java.util.List;
@@ -15,5 +15,5 @@ import rx.Observable;
 
 public interface MainService {
     @GET("index/getpic")
-    Observable<BaseBean<List<DataBean>>> getData();
+    Observable<BaseResponse<List<DataBean>>> getData();
 }
