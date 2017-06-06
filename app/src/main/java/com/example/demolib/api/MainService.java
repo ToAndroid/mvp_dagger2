@@ -14,6 +14,6 @@ import rx.Observable;
  */
 
 public interface MainService {
-    @GET("index/getpic1")
+    @GET("index/getpic")
     Observable<BaseBean<List<DataBean>>> getData();
 }

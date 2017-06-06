@@ -5,15 +5,16 @@ package com.example.demolib.bean;
  */
 
 public class BaseBean<T> {
-    private String code;
+    private int status;
     private String msg;
     private T data;
-    public String getCode() {
-        return code;
+
+    public int getStatus() {
+        return status;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getMsg() {
@@ -35,7 +36,7 @@ public class BaseBean<T> {
     @Override
     public String toString() {
         return "BaseBean{" +
-                "code='" + code + '\'' +
+                "code='" + status + '\'' +
                 ", msg='" + msg + '\'' +
                 '}';
     }

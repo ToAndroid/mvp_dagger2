@@ -8,10 +8,12 @@ import android.widget.TextView;
 
 import com.example.demolib.api.MainApi;
 import com.example.demolib.bean.BaseBean;
+import com.example.demolib.bean.BaseHttpFunc;
 import com.example.demolib.bean.DataBean;
 import com.example.demolib.components.okhttp.HttpLoggingInterceptor;
 import com.example.demolib.utils.Logger;
 import com.example.demolib.utils.PhoneInfoUtils;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -42,22 +44,24 @@ public class MainActivity extends AppCompatActivity {
         String deviceInfo = PhoneInfoUtils.getDeviceInfo(mContext);
         tv.setText(deviceInfo);
         mainApi.getData().observeOn(AndroidSchedulers.mainThread())
-       .subscribe(new Subscriber<BaseBean<List<DataBean>>>() {
-           @Override
-           public void onCompleted() {
-               Logger.e("onCompleted");
-           }
+                .map(new BaseHttpFunc<List<DataBean>>())
+                .subscribe(new Subscriber<List<DataBean>>() {
+                    @Override
+                    public void onCompleted() {
+                        Logger.e("onCompleted");
+                    }
 
-           @Override
-           public void onError(Throwable e) {
-               Logger.e("onError : " +e.getMessage());
-           }
+                    @Override
+                    public void onError(Throwable e) {
+                        Logger.e("onError : " + e.getMessage());
+                    }
 
-           @Override
-           public void onNext(BaseBean<List<DataBean>> s) {
-              Logger.e(s.toString());
-           }
-       });
+                    @Override
+                    public void onNext(List<DataBean> s) {
+                        Gson gson = new Gson();
+                        Logger.e(gson.toJson(s));
+                    }
+                });
 
 
     }
