@@ -20,9 +20,11 @@ ext {
             "adapter-rxjava"      : "com.squareup.retrofit2:adapter-rxjava:2.1.0",
             "converter-gson"      : "com.squareup.retrofit2:converter-gson:2.1.0",
 
-            //OkHttp
+            //fastJson
+            "fastjson"            : "com.alibaba:fastjson:1.1.46.android",
 
-            "okhttp3"              : "com.squareup.okhttp3:okhttp:3.7.0",
+            //OkHttp
+            "okhttp3"             : "com.squareup.okhttp3:okhttp:3.7.0",
 
             // Reactive Programming RxJava
             "rxandroid"           : "io.reactivex:rxandroid:1.1.0",
