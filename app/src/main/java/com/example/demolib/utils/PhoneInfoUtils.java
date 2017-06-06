@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.io.BufferedReader;
@@ -48,6 +49,7 @@ public class PhoneInfoUtils {
      * @param context
      * @return
      */
+    @Nullable
     public static String getDeviceInfo(Context context) {
         try {
             org.json.JSONObject json = new org.json.JSONObject();
