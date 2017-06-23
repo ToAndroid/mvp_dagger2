@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.example.demolib.bean.BaseResponse;
 import com.example.demolib.bean.DataBean;
+import com.example.demolib.components.retrofit.DecodeConverterFactory;
+import com.example.demolib.components.retrofit.FastJsonConverterFactory;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class MainApi {
-    static final String BASE_URL = "http://192.168.1.49/tp5/public/api/";
+    static final String BASE_URL = "http://192.168.1.195/tp5/public/api/";
     private Context mContext;
     private MainService mMainService;
 
@@ -28,7 +30,7 @@ public class MainApi {
         mContext = context;
         Retrofit retrofit =
                 new Retrofit.Builder()
-                        .addConverterFactory(GsonConverterFactory.create())
+                        .addConverterFactory(DecodeConverterFactory.create())
                         .client(mOkHttpClient)
                         .baseUrl(BASE_URL)
                         .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
