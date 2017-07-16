@@ -12,7 +12,7 @@ ext {
     dependencies = [
             //view
             "appcompat-v7"         : "com.android.support:appcompat-v7:25.3.1",
-            "constraint-layout"    : "com.android.support.constraint:constraint-layout:1.0.2",
+//            "constraint-layout"    : "com.android.support.constraint:constraint-layout:1.0.2",
             "recyclerview-v7"      : "com.android.support:recyclerview-v7:25.0.0",
 
             //retrofit

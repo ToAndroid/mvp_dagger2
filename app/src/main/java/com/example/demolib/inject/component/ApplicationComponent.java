@@ -1,12 +1,13 @@
-package com.example.demolib.mvp.component;
+package com.example.demolib.inject.component;
 
 import android.content.Context;
 
-import com.example.demolib.DemoApplication;
+import com.example.demolib.App;
 import com.example.demolib.MainActivity;
 import com.example.demolib.api.MainApi;
-import com.example.demolib.mvp.module.ApiModule;
-import com.example.demolib.mvp.module.ApplicationModule;
+import com.example.demolib.inject.module.ApiModule;
+import com.example.demolib.inject.module.ApplicationModule;
+import com.example.demolib.mvp.model.MainModel;
 
 import javax.inject.Singleton;
 
@@ -18,9 +19,11 @@ import dagger.Component;
 @Singleton
 @Component(modules = {ApplicationModule.class, ApiModule.class})
 public interface ApplicationComponent {
-    void inject(DemoApplication application);
+    void inject(App application);
 
     void inject(MainActivity activity);
+
+    void inject(MainModel mainModel);
 
     Context getContext();
 

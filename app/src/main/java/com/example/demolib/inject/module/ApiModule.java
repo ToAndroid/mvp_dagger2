@@ -1,4 +1,4 @@
-package com.example.demolib.mvp.module;
+package com.example.demolib.inject.module;
 
 import android.content.Context;
 

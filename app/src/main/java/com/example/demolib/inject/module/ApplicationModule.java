@@ -1,8 +1,8 @@
-package com.example.demolib.mvp.module;
+package com.example.demolib.inject.module;
 
 import android.content.Context;
 
-import com.example.demolib.DemoApplication;
+import com.example.demolib.App;
 import com.example.demolib.components.okhttp.CookieInterceptor;
 import com.example.demolib.components.okhttp.HttpLoggingInterceptor;
 
@@ -22,7 +22,7 @@ import okhttp3.OkHttpClient;
 public class ApplicationModule {
     private Context mContext;
 
-    public ApplicationModule(DemoApplication context) {
+    public ApplicationModule(App context) {
         this.mContext = context;
     }
 

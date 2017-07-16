@@ -2,10 +2,10 @@ package com.example.demolib;
 
 import android.app.Application;
 
-import com.example.demolib.mvp.component.ApplicationComponent;
-import com.example.demolib.mvp.component.DaggerApplicationComponent;
-import com.example.demolib.mvp.module.ApiModule;
-import com.example.demolib.mvp.module.ApplicationModule;
+import com.example.demolib.inject.component.ApplicationComponent;
+import com.example.demolib.inject.component.DaggerApplicationComponent;
+import com.example.demolib.inject.module.ApiModule;
+import com.example.demolib.inject.module.ApplicationModule;
 import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.common.internal.Supplier;
 import com.facebook.common.util.ByteConstants;
@@ -24,7 +24,7 @@ import okhttp3.OkHttpClient;
  * Created by john on 2017/6/5.
  */
 
-public class DemoApplication extends Application {
+public class App extends Application {
     public static final int MAX_DISK_CACHE_SIZE = 50 * ByteConstants.MB;
     private static final int MAX_HEAP_SIZE = (int) Runtime.getRuntime().maxMemory();
     public static final int MAX_MEMORY_CACHE_SIZE = MAX_HEAP_SIZE / 8;
