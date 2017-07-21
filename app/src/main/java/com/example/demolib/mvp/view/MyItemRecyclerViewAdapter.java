@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.example.demolib.R;
 import com.example.demolib.mvp.view.ItemFragment.OnListFragmentInteractionListener;
 import com.example.demolib.mvp.view.dummy.DummyContent.DummyItem;
+import com.example.demolib.widget.NetImageView;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
-
+        holder.mNiv.setNetUrl("http://image.tianjimedia.com/uploadImages/2015/285/24/586K2UOWHG9D.jpg");
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +62,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
+        public final NetImageView mNiv;
         public DummyItem mItem;
 
         public ViewHolder(View view) {
@@ -68,6 +70,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
+            mNiv = (NetImageView) view.findViewById(R.id.niv);
         }
 
         @Override
