@@ -22,7 +22,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class MainApi {
-    static final String BASE_URL = "http://192.168.1.195/tp5/public/api/";
+    static final String BASE_URL = "http://192.168.1.233/tp5/public/api/";
     private Context mContext;
     private MainService mMainService;
 
