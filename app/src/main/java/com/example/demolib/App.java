@@ -6,6 +6,7 @@ import com.example.demolib.inject.component.ApplicationComponent;
 import com.example.demolib.inject.component.DaggerApplicationComponent;
 import com.example.demolib.inject.module.ApiModule;
 import com.example.demolib.inject.module.ApplicationModule;
+import com.example.demolib.utils.ToastUtil;
 import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.common.internal.Supplier;
 import com.facebook.common.util.ByteConstants;
@@ -34,6 +35,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        ToastUtil.register(this);
         sAppComponent = DaggerApplicationComponent.builder()
                 .apiModule(new ApiModule())
                 .applicationModule(new ApplicationModule(this)).build();

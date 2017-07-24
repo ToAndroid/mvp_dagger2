@@ -15,6 +15,7 @@ import com.example.demolib.bean.DataBean;
 import com.example.demolib.mvp.view.ItemFragment;
 import com.example.demolib.mvp.view.ItemFragment.OnListFragmentInteractionListener;
 import com.example.demolib.mvp.view.dummy.DummyContent;
+import com.example.demolib.ui.login.LoginActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements OnListFragmentInt
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.root,ItemFragment.newInstance(2)).commit();
 
+        LoginActivity.startLoginActivity(this);
 
     }
 

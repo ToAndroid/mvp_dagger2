@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.demolib.bean.BaseResponse;
 import com.example.demolib.bean.DataBean;
+import com.example.demolib.bean.LoginData;
 import com.example.demolib.components.retrofit.DecodeConverterFactory;
 import com.example.demolib.components.retrofit.FastJsonConverterFactory;
 
@@ -38,7 +39,11 @@ public class MainApi {
         mMainService = retrofit.create(MainService.class);
     }
 
-    public Observable<BaseResponse<List<DataBean>>> getData(){
-       return mMainService.getData().subscribeOn(Schedulers.io());
+    public Observable<BaseResponse<List<DataBean>>> getData() {
+        return mMainService.getData().subscribeOn(Schedulers.io());
+    }
+
+    public Observable<BaseResponse<String>> login(String username, String md5) {
+        return mMainService.login(username, md5);
     }
 }
