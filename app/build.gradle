@@ -10,10 +10,75 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
     }
+
+    def isRelease = gradle.startParameter.taskNames.any { it.contains('assemblerelease') }
+
+    signingConfigs {
+        release {
+            if (isRelease) {
+                def fileKey = project.rootProject.file('key.properties')
+                if (!fileKey.exists()) {
+                    throw new RuntimeException("----------> 'key.properties' not exists")
+                }
+                Properties properties = new Properties()
+                properties.load(fileKey.newDataInputStream())
+
+                def path = properties.getProperty("keystore.path");
+                def password = properties.getProperty("keystore.password");
+                def alias = properties.getProperty("keystore.alias");
+
+                storeFile file(path)
+                storePassword password
+                keyAlias alias
+                keyPassword password
+
+            }
+        }
+
+        debug {
+            def fileKey = project.rootProject.file('key.properties')
+            if (fileKey.exists()) {
+                Properties properties = new Properties()
+                properties.load(fileKey.newDataInputStream())
+
+                def path = properties.getProperty("keystore.path");
+                def password = properties.getProperty("keystore.password");
+                def alias = properties.getProperty("keystore.alias");
+
+                storeFile file(path)
+                storePassword password
+                keyAlias alias
+                keyPassword password
+            }
+
+
+        }
+    }
+
     buildTypes {
         release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            if (isRelease) {
+                signingConfig signingConfigs.release
+            }
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            pseudoLocalesEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+        }
+
+        debug{
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            def fileKey = project.rootProject.file('key.properties')
+            if (fileKey.exists()) {
+                signingConfig signingConfigs.debug
+            }
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+            shrinkResources false
+            zipAlignEnabled false
+            pseudoLocalesEnabled false
         }
     }
 }
