@@ -23,7 +23,7 @@ public class ApkDownManager {
         return instace;
     }
 
-    public void checkUpdate(String url,Activity activity, boolean isWifiUpdate) {
+    public void checkUpdate(String url, Activity activity) {
         mContext = activity.getApplicationContext();
         //本都存储的升级号与当前软件的版本号3种情况：
         //a:大于,说明本地已有下载好的升级包，用户没有安装
@@ -38,20 +38,23 @@ public class ApkDownManager {
                 showNoticeDialog(activity);
 
             } else {//当前路径下没有升级升级包，重新网络下载
-                checkUpdateNet(url,activity);
+                checkUpdateNet(url, activity);
             }
         } else { //情况b,c;
-            checkUpdateNet(url,activity);
+            checkUpdateNet(url, activity);
         }
     }
 
     private void checkUpdateNet(final String url, final Activity activity) {
+        if (!UpdateUtils.isNetAvailable(activity.getApplicationContext())) {
+            return;
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String l=url+"?version=" +UpdateUtils.getVersionCode(mContext);
+                String l = url + "?version=" + UpdateUtils.getVersionCode(mContext);
                 final String s = UploadNet.get(l);
-                if (!TextUtils.isEmpty(s)){
+                if (!TextUtils.isEmpty(s)) {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -67,6 +70,9 @@ public class ApkDownManager {
 
 
     private void showNoticeDialog(Activity activity) {
+        if (!UpdateUtils.isNetAvailable(activity.getApplicationContext())) {
+            return;
+        }
         UpdateDialog dialog = new UpdateDialog(activity);
         dialog.showLocalDialog();
 

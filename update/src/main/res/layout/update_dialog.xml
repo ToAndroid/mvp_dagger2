@@ -1,55 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-     >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/umeng_update_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
         android:layout_centerInParent="true"
-        android:orientation="vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/update_dialog_bg"
-         >
-	<RelativeLayout 
-	    android:layout_width="fill_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
             android:layout_height="34dp"
-	      android:layout_marginTop="15dp"
-	    >
-	    <ImageView 
-		     android:id="@+id/update_id_cancel"
+            android:layout_marginTop="15dp">
+
+            <ImageView
+                android:id="@+id/update_id_cancel"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="23dp"
-                android:background="@drawable/update_button_cancel"
-		    />
-		<TextView 
-		    android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-		    android:text="@string/find_update"
-		    android:textColor="@android:color/black"
-		    android:layout_alignParentLeft="true"
-		    android:textSize="16dp"
-		    android:gravity="center"
-		    />
-		
-		</RelativeLayout>
+                android:background="@drawable/update_button_cancel" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:text="@string/find_update"
+                android:textColor="@android:color/black"
+                android:textSize="16dp" />
+
+        </RelativeLayout>
+
         <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
-            
-             >
+            android:layout_marginRight="15dp"
+
+            >
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/update_content"
@@ -57,26 +56,42 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:textSize="13dp"
-                   
-                    android:textColor="#000" />
+                    android:textColor="#000"
+
+                    android:textSize="13dp" />
             </LinearLayout>
         </ScrollView>
 
-        <Button
-            android:id="@+id/update_id_ok"
-            android:layout_width="wrap_content"
-            android:layout_height="34dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/update_button_ok"
-            android:gravity="center"
-            android:layout_marginTop="25dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:paddingLeft="25dp"
-            android:paddingRight="25dp"
-            android:text="@string/pdateNow"
-            android:textSize="16dp"
-            android:textColor="#1CA7FF" />
+            android:layout_marginTop="25dp">
+
+            <Button
+                android:id="@+id/update_id_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/update_button_ok"
+                android:gravity="center"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:text="@string/pdateNow"
+                android:textColor="#1CA7FF"
+                android:textSize="16dp" />
+
+            <ProgressBar
+                android:id="@+id/pb"
+                style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

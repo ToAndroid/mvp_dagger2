@@ -3,19 +3,25 @@ package com.app.update;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+
 /**
  * Created by john on 2017/7/28.
  */
 
-public class UpdateDialog {
+public class UpdateDialog implements UploadNet.DownFileListenter {
 
     /**
      * 下载的升级包软件版本号
@@ -24,25 +30,18 @@ public class UpdateDialog {
     /**
      * 升级包的主要信息
      */
-    public static final String UPLOAD_DESC = "desc";
-    /**
-     * 升级包的名字
-     */
-    public static final String UPLOAD_VNAME = "name";
-    /**
-     * 升级包的大小
-     */
-    public static final String UPLOAD_FSIZE = "size";
-    /**
-     * 升级包的时间
-     */
-    public static final String UPLOAD_PDATE = "time";
+    public static final String UPLOAD_CONTENT = "content";
+    public static final String UPLOAD_URL = "url";
+
 
     public static final String UPLOAD_STATUS = "status";
     private Context mContext;
     private AlertDialog mNoticeDialog;
     private View mRootVive;
     private TextView mUpdateContent;
+    private ProgressBar mPb;
+
+    private String downAPKurl;
 
     public UpdateDialog(Activity activity) {
         this.mContext = activity;
@@ -78,24 +77,41 @@ public class UpdateDialog {
 
     private void initView() {
         mUpdateContent = (TextView) mRootVive.findViewById(R.id.update_content);
+
+
         mRootVive.findViewById(R.id.update_id_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        setOnClickListener(null);
     }
 
     public void setOnClickListener(View.OnClickListener l) {
-        mRootVive.findViewById(R.id.update_id_ok).setOnClickListener(l);
+        mRootVive.findViewById(R.id.update_id_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(downAPKurl)) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mNoticeDialog!=null){
+                                mNoticeDialog.setCancelable(false);
+                            }
+                            UploadNet.downFile(downAPKurl, mContext.getFilesDir().getPath(), mContext.getPackageName() + ".apk", UpdateDialog.this);
+                        }
+                    }).start();
+
+                    v.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private void localVersionInfo() {
-        String desc = UpdatePrefUtils.getString(mContext, UPLOAD_DESC, mContext.getString(R.string.loading));
-        String vname = UpdatePrefUtils.getString(mContext, UPLOAD_VNAME, mContext.getString(R.string.loading));
-        String fsize = UpdatePrefUtils.getString(mContext, UPLOAD_FSIZE, mContext.getString(R.string.loading));
-        String pdate = UpdatePrefUtils.getString(mContext, UPLOAD_PDATE, mContext.getString(R.string.loading));
-        showtext(vname, fsize, pdate, desc);
+        String desc = UpdatePrefUtils.getString(mContext, UPLOAD_CONTENT, mContext.getString(R.string.loading));
+
 
     }
 
@@ -105,34 +121,31 @@ public class UpdateDialog {
             JSONObject jsonObject = new JSONObject(json);
             if (!jsonObject.has(UPLOAD_STATUS)) {
                 return false;
-            } else {
-                String status = jsonObject.getString(UPLOAD_STATUS);
-                if (!TextUtils.equals("200", status)) {
+            }
+
+            String status = jsonObject.getString(UPLOAD_STATUS);
+            if (TextUtils.equals(status, "300")) {//wifi更新
+                if (!UpdateUtils.isWifiAvailable(mContext)) {
                     return false;
+                }
+            } else if (TextUtils.equals(status, "100")) {//强制更新
+                if (mNoticeDialog != null) {
+                    mNoticeDialog.setCancelable(false);
+                }
+                mRootVive.findViewById(R.id.update_id_cancel).setVisibility(View.GONE);
+
+            } else if (!TextUtils.equals(status, "200")) {//全网更新
+                return false;
+            }
+            if (jsonObject.has(UPLOAD_URL)) {
+                downAPKurl = jsonObject.getString(UPLOAD_URL);
+            }
+            if (jsonObject.has(UPLOAD_CONTENT)) {
+                if (mUpdateContent != null) {
+                    mUpdateContent.setText(jsonObject.getString(UPLOAD_CONTENT));
                 }
             }
 
-
-            String desc = "";
-            String vname = "";
-            String fsize = "";
-            String pdate = "";
-            if (jsonObject.has(UPLOAD_DESC)) {
-                desc = jsonObject.getString(UPLOAD_DESC);
-            }
-
-            if (jsonObject.has(UPLOAD_FSIZE)) {
-                fsize = jsonObject.getString(UPLOAD_FSIZE);
-            }
-
-            if (jsonObject.has(UPLOAD_PDATE)) {
-                pdate = jsonObject.getString(UPLOAD_PDATE);
-            }
-
-            if (jsonObject.has(UPLOAD_VNAME)) {
-                vname = jsonObject.getString(UPLOAD_VNAME);
-            }
-            showtext(vname, fsize, pdate, desc);
             return true;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -142,24 +155,6 @@ public class UpdateDialog {
 
     }
 
-    private void showtext(String vname, String fsize, String pdate, String desc) {
-
-        if (!"".equals(desc)) {
-            desc = "\n" + desc;
-        }
-        if (!"".equals(pdate)) {
-            pdate = "\n更新时间  ：" + pdate;
-        }
-        if (!"".equals(fsize)) {
-            fsize = "\n文件大小  ： " + fsize;
-        }
-        if (!"".equals(vname)) {
-            vname = "\n版本号  ： " + vname;
-        }
-        if (mUpdateContent != null) {
-            mUpdateContent.setText(vname + fsize + pdate + desc);
-        }
-    }
 
     public void finish() {
         if (mNoticeDialog != null) {
@@ -168,4 +163,64 @@ public class UpdateDialog {
     }
 
 
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onProgress(final long total, final long progress) {
+        ((Activity) mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mPb == null && mRootVive != null) {
+                    mPb = (ProgressBar) mRootVive.findViewById(R.id.pb);
+                    mPb.setVisibility(View.VISIBLE);
+                    mPb.setMax((int) total);
+                }
+                mPb.setProgress((int) progress);
+            }
+        });
+        SystemClock.sleep(10);
+
+    }
+
+    @Override
+    public void onFinish(final String savePath) {
+
+        ((Activity) mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mPb != null) {
+                    mPb.setVisibility(View.GONE);
+                }
+                installApk(savePath);
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onDownError() {
+
+    }
+
+    /**
+     * 安装APK文件
+     */
+    private void installApk(String savePath) {
+        final File apkfile = new File(savePath);
+        if (!apkfile.exists()) {
+            return;
+        }
+        // 通过Intent安装APK文件
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.setDataAndType(Uri.parse("file://" + apkfile.toString()),
+                "application/vnd.android.package-archive");
+        mContext.startActivity(i);
+        android.os.Process.killProcess(android.os.Process.myPid());
+
+    }
 }

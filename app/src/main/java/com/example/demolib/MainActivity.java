@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements OnListFragmentInt
 
 //        LoginActivity.startLoginActivity(this);
         String url ="http://192.168.1.233/tp5/public/api/index/upload";
-        ApkDownManager.getInstace().checkUpdate(url,this,true);
+        ApkDownManager.getInstace().checkUpdate(url,this);
 
     }
 

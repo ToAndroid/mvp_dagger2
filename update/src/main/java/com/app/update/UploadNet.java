@@ -15,11 +15,14 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
+
 /**
  * Created by jb on 2017/7/24.
  */
 
 public class UploadNet {
+    public static final String TAG = "UploadNet";
+
     private final static int READ_TIMEOUT = 10000;
     private final static int CONNECT_TIMEOUT = 10000;
     private static boolean DEBUG = true;
@@ -50,7 +53,7 @@ public class UploadNet {
             }
             String s = new String(bos.toByteArray());
             if (DEBUG) {
-                Log.i("net", s);
+                Log.i(TAG, s);
             }
 
 
@@ -59,7 +62,7 @@ public class UploadNet {
         } catch (Exception e) {
             e.printStackTrace();
             if (DEBUG) {
-                Log.e("net", e.getMessage());
+                Log.e(TAG, e.getMessage());
             }
         }
         return null;
@@ -100,18 +103,27 @@ public class UploadNet {
                 long size = 0;
                 int len = 0;
                 if (listenter != null) {
+                    if (DEBUG){
+                        Log.i(TAG,"onStart");
+                    }
                     listenter.onStart();
                 }
                 while ((len = inputStream.read(buffer)) != -1) {
                     fileOutputStream.write(buffer, 0, len);
                     size += len;
                     if (listenter != null) {
+                        if (DEBUG){
+                            Log.i(TAG,size+" / "+contentLength);
+                        }
                         listenter.onProgress(contentLength, size);
                     }
                 }
                 fileOutputStream.close();
                 if (listenter != null) {
-                    listenter.onFinish();
+                    if (DEBUG){
+                        Log.i(TAG,"onFinish");
+                    }
+                    listenter.onFinish(saveFile.getPath());
                 }
             }
 
@@ -143,7 +155,7 @@ public class UploadNet {
 
         void onProgress(long total, long progress);
 
-        void onFinish();
+        void onFinish(String savePath);
 
         void onDownError();
     }
