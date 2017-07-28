@@ -181,7 +181,7 @@ public class UpdateDialog implements UploadNet.DownFileListenter {
                 mPb.setProgress((int) progress);
             }
         });
-        SystemClock.sleep(10);
+        SystemClock.sleep(1);
 
     }
 
