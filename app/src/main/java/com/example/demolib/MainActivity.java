@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity implements OnListFragmentInt
 //        fragmentTransaction.replace(R.id.root,ItemFragment.newInstance(2)).commit();
 
 //        LoginActivity.startLoginActivity(this);
-        ApkDownManager.getInstace().checkUpdate(this,true);
+        String url ="http://192.168.1.233/tp5/public/api/index/upload";
+        ApkDownManager.getInstace().checkUpdate(url,this,true);
 
     }
 

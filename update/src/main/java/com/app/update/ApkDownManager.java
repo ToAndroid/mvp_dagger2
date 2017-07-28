@@ -2,6 +2,7 @@ package com.app.update;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 
 import java.io.File;
 
@@ -22,13 +23,13 @@ public class ApkDownManager {
         return instace;
     }
 
-    public void checkUpdate(Activity activity, boolean isWifiUpdate) {
+    public void checkUpdate(String url,Activity activity, boolean isWifiUpdate) {
         mContext = activity.getApplicationContext();
         //本都存储的升级号与当前软件的版本号3种情况：
         //a:大于,说明本地已有下载好的升级包，用户没有安装
         //b:等于,说明当前版本相同，需要进行网络检查是否有更新版本
         //c:小于，说明当前存储错误，需要进行网络检查是否有更新版本
-        int currentCode = UpdateUtils.getInt(mContext, UPLOAD_VERSIONCODE, 0);
+        int currentCode = UpdatePrefUtils.getInt(mContext, UPLOAD_VERSIONCODE, 0);
         int versionCode = UpdateUtils.getVersionCode(mContext);
         if (currentCode > versionCode) {  //情况a
             File apk_file = new File(UpdateUtils.getApkPath(mContext));
@@ -37,22 +38,37 @@ public class ApkDownManager {
                 showNoticeDialog(activity);
 
             } else {//当前路径下没有升级升级包，重新网络下载
-                checkUpdateNet(activity);
+                checkUpdateNet(url,activity);
             }
         } else { //情况b,c;
-            checkUpdateNet(activity);
+            checkUpdateNet(url,activity);
         }
     }
 
-    private void checkUpdateNet(Activity activity) {
-        UpdateDialog dialog = new UpdateDialog(activity);
-        dialog.showDialog();
+    private void checkUpdateNet(final String url, final Activity activity) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String l=url+"?version=" +UpdateUtils.getVersionCode(mContext);
+                final String s = UploadNet.get(l);
+                if (!TextUtils.isEmpty(s)){
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            UpdateDialog dialog = new UpdateDialog(activity);
+                            dialog.showRemoteDialog(s);
+                        }
+                    });
+                }
+            }
+        }).start();
+
     }
 
 
     private void showNoticeDialog(Activity activity) {
         UpdateDialog dialog = new UpdateDialog(activity);
-        dialog.showDialog();
+        dialog.showLocalDialog();
 
     }
 

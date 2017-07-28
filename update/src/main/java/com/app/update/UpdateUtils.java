@@ -30,11 +30,6 @@ public class UpdateUtils {
         return (networkInfo != null && networkInfo.isConnected());
     }
 
-    public static int getInt(Context context, String key, int defaultValue) {
-        SharedPreferences sp = context.getSharedPreferences(
-                "version_config", Context.MODE_PRIVATE);
-        return sp.getInt(key, defaultValue);
-    }
 
     /**
      * 获取软件版本号

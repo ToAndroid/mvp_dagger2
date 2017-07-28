@@ -20,8 +20,8 @@ import java.net.URL;
  */
 
 public class UploadNet {
-    private final static int READ_TIMEOUT = 3000;
-    private final static int CONNECT_TIMEOUT = 3000;
+    private final static int READ_TIMEOUT = 10000;
+    private final static int CONNECT_TIMEOUT = 10000;
     private static boolean DEBUG = true;
 
     public static String get(String urlStr) {
@@ -58,6 +58,9 @@ public class UploadNet {
 
         } catch (Exception e) {
             e.printStackTrace();
+            if (DEBUG) {
+                Log.e("net", e.getMessage());
+            }
         }
         return null;
     }
