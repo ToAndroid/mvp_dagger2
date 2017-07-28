@@ -32,7 +32,7 @@ public class ApkDownManager {
         int currentCode = UpdatePrefUtils.getInt(mContext, UPLOAD_VERSIONCODE, 0);
         int versionCode = UpdateUtils.getVersionCode(mContext);
         if (currentCode > versionCode) {  //情况a
-            File apk_file = new File(UpdateUtils.getApkPath(mContext));
+            File apk_file = new File(UpdateUtils.getApkPath(mContext),UpdateUtils.getApkName(mContext));
             if (apk_file.exists()) {//当前路径下有升级版本包给出升级弹框
                 // 显示提示对话框
                 showNoticeDialog(activity);

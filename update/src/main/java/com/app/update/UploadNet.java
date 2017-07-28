@@ -118,7 +118,11 @@ public class UploadNet {
                         listenter.onProgress(contentLength, size);
                     }
                 }
+
+                fileOutputStream.flush();
+                inputStream.close();
                 fileOutputStream.close();
+                urlConnection.disconnect();
                 if (listenter != null) {
                     if (DEBUG){
                         Log.i(TAG,"onFinish");

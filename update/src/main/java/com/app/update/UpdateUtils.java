@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
 
 import java.io.File;
 
@@ -81,13 +82,15 @@ public class UpdateUtils {
     }
 
     public static String getApkPath(Context context) {
-        File filesDir = context.getFilesDir();
-        if (!filesDir.exists()) {
-            filesDir.mkdirs();
+        String packageName = context.getPackageName();
+        if (packageName!=null&&packageName.contains(".")){
+            packageName=packageName.substring(packageName.lastIndexOf("."));
         }
-        String path = filesDir.getPath();
+        return  Environment.getExternalStorageDirectory().getPath()+File.separator+packageName;
+    }
 
-        return path + context.getPackageName() + ".apk";
+    public static String getApkName(Context context){
+        return  context.getPackageName()+".apk";
     }
 
 }

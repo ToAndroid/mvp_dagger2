@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -99,11 +100,11 @@ public class UpdateDialog implements UploadNet.DownFileListenter {
                             if (mNoticeDialog!=null){
                                 mNoticeDialog.setCancelable(false);
                             }
-                            UploadNet.downFile(downAPKurl, mContext.getFilesDir().getPath(), mContext.getPackageName() + ".apk", UpdateDialog.this);
+                            UploadNet.downFile(downAPKurl, UpdateUtils.getApkPath(mContext), UpdateUtils.getApkName(mContext), UpdateDialog.this);
                         }
                     }).start();
 
-                    v.setVisibility(View.GONE);
+                    v.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -132,7 +133,7 @@ public class UpdateDialog implements UploadNet.DownFileListenter {
                 if (mNoticeDialog != null) {
                     mNoticeDialog.setCancelable(false);
                 }
-                mRootVive.findViewById(R.id.update_id_cancel).setVisibility(View.GONE);
+                mRootVive.findViewById(R.id.update_id_cancel).setVisibility(View.INVISIBLE);
 
             } else if (!TextUtils.equals(status, "200")) {//全网更新
                 return false;
@@ -211,6 +212,7 @@ public class UpdateDialog implements UploadNet.DownFileListenter {
      */
     private void installApk(String savePath) {
         final File apkfile = new File(savePath);
+        String fileMD5 = MD5Util.getFileMD5(apkfile);
         if (!apkfile.exists()) {
             return;
         }
