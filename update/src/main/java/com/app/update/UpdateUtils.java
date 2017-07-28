@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Path;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
@@ -84,9 +85,14 @@ public class UpdateUtils {
     public static String getApkPath(Context context) {
         String packageName = context.getPackageName();
         if (packageName!=null&&packageName.contains(".")){
-            packageName=packageName.substring(packageName.lastIndexOf("."));
+            packageName=packageName.substring(packageName.lastIndexOf(".")+1);
         }
-        return  Environment.getExternalStorageDirectory().getPath()+File.separator+packageName;
+        String path = Environment.getExternalStorageDirectory().getPath() + File.separator + packageName + File.separator + "apk";
+        File file = new File(path);
+        if (!file.exists()){
+            file.mkdirs();
+        }
+        return  path;
     }
 
     public static String getApkName(Context context){

@@ -212,7 +212,6 @@ public class UpdateDialog implements UploadNet.DownFileListenter {
      */
     private void installApk(String savePath) {
         final File apkfile = new File(savePath);
-        String fileMD5 = MD5Util.getFileMD5(apkfile);
         if (!apkfile.exists()) {
             return;
         }
