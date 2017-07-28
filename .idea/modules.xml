@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/DemoLib.iml" filepath="$PROJECT_DIR$/DemoLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvp_dagger2.iml" filepath="$PROJECT_DIR$/mvp_dagger2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/update/update.iml" filepath="$PROJECT_DIR$/update/update.iml" />
     </modules>
   </component>
 </project>

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.app.update.ApkDownManager;
 import com.example.demolib.api.MainApi;
 import com.example.demolib.bean.DataBean;
 import com.example.demolib.mvp.view.ItemFragment;
@@ -44,11 +45,12 @@ public class MainActivity extends AppCompatActivity implements OnListFragmentInt
         ButterKnife.bind(this);
         App.getApplicationComponent().inject(this);
 
-        FragmentManager supportFragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.root,ItemFragment.newInstance(2)).commit();
+//        FragmentManager supportFragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.root,ItemFragment.newInstance(2)).commit();
 
-        LoginActivity.startLoginActivity(this);
+//        LoginActivity.startLoginActivity(this);
+        ApkDownManager.getInstace().checkUpdate(this,true);
 
     }
 

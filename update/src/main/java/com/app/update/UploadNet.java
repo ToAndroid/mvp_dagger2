@@ -1,8 +1,8 @@
-package com.example.demolib.updata;
+package com.app.update;
 
 import android.text.TextUtils;
+import android.util.Log;
 
-import com.example.demolib.utils.Logger;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -22,6 +22,7 @@ import java.net.URL;
 public class UploadNet {
     private final static int READ_TIMEOUT = 3000;
     private final static int CONNECT_TIMEOUT = 3000;
+    private static boolean DEBUG = true;
 
     public static String get(String urlStr) {
         if (TextUtils.isEmpty(urlStr)) return null;
@@ -48,7 +49,10 @@ public class UploadNet {
 
             }
             String s = new String(bos.toByteArray());
-            Logger.e(s);
+            if (DEBUG) {
+                Log.i("net", s);
+            }
+
 
             return s;
 
