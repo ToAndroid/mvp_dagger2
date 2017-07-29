@@ -48,7 +48,9 @@ ext {
 
 
             //picasso
-            "picasso"              : "com.squareup.picasso:picasso:2.5.2"
+            "picasso"              : "com.squareup.picasso:picasso:2.5.2",
+
+            "umeng"                : "com.umeng.analytics:analytics:latest.integration"
 
 
     ]

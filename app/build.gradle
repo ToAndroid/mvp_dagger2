@@ -114,4 +114,6 @@ dependencies {
     //picasso
     compile rootProject.ext.dependencies["picasso"]
     compile project(':update')
+
+    compile rootProject.ext.dependencies["umeng"]
 }

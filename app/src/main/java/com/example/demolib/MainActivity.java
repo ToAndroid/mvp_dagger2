@@ -50,9 +50,9 @@ public class MainActivity extends AppCompatActivity implements OnListFragmentInt
 //        fragmentTransaction.replace(R.id.root,ItemFragment.newInstance(2)).commit();
 
 //        LoginActivity.startLoginActivity(this);
-        String url ="http://192.168.1.233/tp5/public/api/index/upload";
-        ApkDownManager.getInstace().checkUpdate(url,this);
-
+        String url = "http://192.168.1.233/tp5/public/api/index/upload";
+        ApkDownManager.getInstace().checkUpdate(url, this);
+        UmengManager.onEvent(this, "main");
     }
 
     @Override
@@ -96,5 +96,17 @@ public class MainActivity extends AppCompatActivity implements OnListFragmentInt
 
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UmengManager.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        UmengManager.onPause(this);
     }
 }

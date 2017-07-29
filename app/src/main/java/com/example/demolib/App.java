@@ -40,6 +40,7 @@ public class App extends Application {
                 .apiModule(new ApiModule())
                 .applicationModule(new ApplicationModule(this)).build();
         sAppComponent.inject(this);
+        UmengManager.init(getApplicationContext());
     }
 
     public static ApplicationComponent getApplicationComponent() {
