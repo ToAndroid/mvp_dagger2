@@ -1,10 +1,8 @@
 package com.example.demolib.api;
 
 
-import com.example.demolib.base.BasePresenter;
 import com.example.demolib.bean.BaseResponse;
 import com.example.demolib.bean.DataBean;
-import com.example.demolib.bean.LoginData;
 
 import java.util.List;
 
